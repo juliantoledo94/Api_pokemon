@@ -12,13 +12,20 @@ const getPokemonFromApi = (endpoint) => {
     
 }
 
+const getPokemonUrlFromApi = (url) =>{
+    return fetch(`${url}`)
+    .then(something => something.json())
+    .then(({data}) => data)
+    
+}
+
 
 
 const createCard = ({name, url}) => `
-            <div class="row container m-1">
+            <div class="row container m-1" ">
                 <div class="col-sm-6 mb-3 mb-sm-0 container">
                     <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" poke-url="${url}">
                         <h5 class="card-title">${name}</h5>
                         <p class="card-text">${url}</p>
                         <a href="#" class="btn btn-primary">Mas info</a>
@@ -30,17 +37,35 @@ const createCard = ({name, url}) => `
 `
 const pageContent = document.getElementById("content");
 
+const modal = document.querySelector(".modal");
+
+
 
 
 
 
 const renderPage = async () => {
     const firstHundredPokemons = await getPokemonFromApi("pokemon?limit=100&offset=0")
-
     const template = firstHundredPokemons
     .map(pokemon => createCard(pokemon))
     .join("")
     pageContent.innerHTML = template
 }
 
-renderPage();
+const render = async () => {
+    await renderPage();
+
+    const cards = document.querySelectorAll(".card-body")
+    
+    cards.forEach(card =>{
+        card.addEventListener("click", (event) =>{
+            const pokeUrl = event.currentTarget.getAttribute("poke-url")
+            console.log(pokeUrl)
+        })
+    })
+    
+}
+
+
+
+render()
