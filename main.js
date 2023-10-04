@@ -58,11 +58,10 @@ const render = async () => {
     const cards = document.querySelectorAll(".card-body")
     
     cards.forEach(card =>{
-        card.addEventListener("click", (event) =>{
+        card.addEventListener("click", async (event) =>{
             const pokeUrl = event.currentTarget.getAttribute("poke-url")
-            
-            getPokemonUrlFromApi(pokeUrl).then(
-                (abilities) => console.log(abilities))
+            const pokemonAbilities = await getPokemonUrlFromApi(pokeUrl)
+            console.log(pokemonAbilities)
         })
     })
     
