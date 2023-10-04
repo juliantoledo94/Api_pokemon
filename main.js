@@ -15,7 +15,7 @@ const getPokemonFromApi = (endpoint) => {
 const getPokemonUrlFromApi = (url) =>{
     return fetch(`${url}`)
     .then(something => something.json())
-    .then(({data}) => data)
+    .then(({abilities}) => abilities)  
     
 }
 
@@ -60,7 +60,9 @@ const render = async () => {
     cards.forEach(card =>{
         card.addEventListener("click", (event) =>{
             const pokeUrl = event.currentTarget.getAttribute("poke-url")
-            console.log(pokeUrl)
+            
+            getPokemonUrlFromApi(pokeUrl).then(
+                (abilities) => console.log(abilities))
         })
     })
     
