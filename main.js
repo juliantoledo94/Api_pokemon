@@ -37,7 +37,7 @@ const createCard = ({name, url}) => `
 `
 const pageContent = document.getElementById("content");
 
-const modal = document.querySelector(".modal");
+
 
 
 
@@ -52,6 +52,13 @@ const renderPage = async () => {
     pageContent.innerHTML = template
 }
 
+
+const modal = document.querySelector(".modal");
+
+modal.querySelector(".delete").addEventListener("click", ()=>{
+    modal.classList.remove("is-active")
+});
+
 const render = async () => {
     await renderPage();
 
@@ -61,7 +68,8 @@ const render = async () => {
         card.addEventListener("click", async (event) =>{
             const pokeUrl = event.currentTarget.getAttribute("poke-url")
             const pokemonAbilities = await getPokemonUrlFromApi(pokeUrl)
-            console.log(pokemonAbilities)
+            console.log(pokemonAbilities, modal)
+            modal.classList.add("is-active")
         })
     })
     
@@ -69,4 +77,6 @@ const render = async () => {
 
 
 
-render()
+
+
+render();
