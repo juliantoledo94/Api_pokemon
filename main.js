@@ -15,7 +15,10 @@ const getPokemonFromApi = (endpoint) => {
 const getPokemonUrlFromApi = (url) =>{
     return fetch(`${url}`)
     .then(something => something.json())
-    .then(({abilities}) => abilities)  
+    .then(({abilities}) => abilities)
+    
+    
+     
     
 }
 
@@ -38,6 +41,21 @@ const createCard = ({name, url}) => `
 const pageContent = document.getElementById("content");
 
 
+//Aca le pasamos lo que se va a ver en la modal!!
+const renderModal = (pokemonAbilities) =>{
+    
+    const primerHabilidad = pokemonAbilities[0].ability.name;
+    const segundaHabilidad = pokemonAbilities[1].ability.name;
+    
+    console.log(primerHabilidad)
+    const skill_1 = modal.querySelector(".modal-card-body-skill1");
+    const skill_2 = modal.querySelector(".modal-card-body-skill2");
+     
+    skill_1.innerHTML= primerHabilidad;
+    skill_2.innerHTML= segundaHabilidad;
+
+    
+}
 
 
 
@@ -68,8 +86,9 @@ const render = async () => {
         card.addEventListener("click", async (event) =>{
             const pokeUrl = event.currentTarget.getAttribute("poke-url")
             const pokemonAbilities = await getPokemonUrlFromApi(pokeUrl)
-            console.log(pokemonAbilities, modal)
+            console.log(pokemonAbilities)
             modal.classList.add("is-active")
+            renderModal(pokemonAbilities);
         })
     })
     
